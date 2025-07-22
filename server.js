@@ -4,14 +4,14 @@ const path = require('path');
 const { instagramGetUrl } = require('instagram-url-direct');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+  res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 app.post('/api/download', async (req, res) => {
@@ -26,12 +26,11 @@ app.post('/api/download', async (req, res) => {
       return res.json({ links: [] });
     }
 
-    // Filter links by media type
     const links = data.media_details
       .filter(m => {
         if (type === 'video') return m.type === 'video';
         if (type === 'photo') return m.type === 'image';
-        return true;  // other types (reels/carousel etc.)
+        return true;
       })
       .map(m => m.url);
 
