@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const { instagramGetUrl } = require('instagram-url-direct');
+const axios = require('axios');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,27 +16,41 @@ app.get('/', (req, res) => {
 
 app.post('/api/download', async (req, res) => {
   const { url, type } = req.body;
+
   if (!url || !type) {
     return res.status(400).json({ error: 'Missing URL or type' });
   }
 
   try {
-    const data = await instagramGetUrl(url);
-    if (!data || !data.url_list || data.url_list.length === 0) {
-      return res.json({ links: [] });
-    }
+    console.log('Fetching via RapidAPI:', url);
 
-    const links = data.media_details
-      .filter(m => {
-        if (type === 'video') return m.type === 'video';
-        if (type === 'photo') return m.type === 'image';
+    const response = await axios.get(
+      'https://instagram-scrapper-posts-reels-stories-downloader.p.rapidapi.com/link',
+      {
+        params: { url },
+        headers: {
+          'X-RapidAPI-Key': process.env.RAPIDAPI_KEY, // set in Render dashboard
+          'X-RapidAPI-Host': 'instagram-scrapper-posts-reels-stories-downloader.p.rapidapi.com'
+        }
+      }
+    );
+
+    const items = response.data || [];
+    console.log('Received items:', items.length);
+
+    // Filter based on type
+    const links = items
+      .filter(item => {
+        if (type === 'video') return item.type === 'video';
+        if (type === 'photo') return item.type === 'image';
         return true;
       })
-      .map(m => m.url);
+      .map(item => item.link);
 
     res.json({ links });
+
   } catch (err) {
-    console.error(err);
+    console.error('RapidAPI error:', err.response?.data || err.message);
     res.status(500).json({ error: 'Failed to retrieve media links' });
   }
 });
