@@ -1,1 +1,125 @@
-/* CSS placeholder – use your previously provided styles here */
+/* Base resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Header & nav */
+.header {
+  background: #fafafa;
+  border-bottom: 1px solid #ddd;
+}
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.tab {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+.tab.active {
+  border-bottom: 2px solid #007bff;
+  color: #007bff;
+}
+
+/* Hero section */
+.hero {
+  background: #f2faff;
+  padding: 2rem 0;
+  text-align: center;
+}
+.input-group {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.input-group input {
+  width: min(100%, 400px);
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.input-group button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background: #007bff;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.input-group button:hover {
+  background: #0056b3;
+}
+
+/* Feedback and results */
+.feedback {
+  margin-top: 1rem;
+  color: #007bff;
+}
+.feedback.hidden {
+  display: none;
+}
+.result {
+  margin-top: 1rem;
+}
+.result a {
+  display: block;
+  margin: 0.5rem 0;
+  color: #007bff;
+  text-decoration: none;
+}
+.result a:hover {
+  text-decoration: underline;
+}
+
+/* Features grid */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+.feature h3 {
+  margin-bottom: 0.5rem;
+}
+
+/* FAQ */
+.faq h2 {
+  margin-bottom: 1rem;
+}
+details {
+  margin-bottom: 0.5rem;
+}
+details summary {
+  font-weight: bold;
+  cursor: pointer;
+}
+details p {
+  margin-top: 0.5rem;
+  padding-left: 1rem;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 1rem 0;
+  border-top: 1px solid #ddd;
+  margin-top: 2rem;
+}
