@@ -1,3 +1,19 @@
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+// const { instagramGetUrl } = require('instagram-url-direct'); // Commented out for now
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(cors());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
 app.post('/api/download', async (req, res) => {
   const { url, type } = req.body;
 
@@ -6,25 +22,24 @@ app.post('/api/download', async (req, res) => {
   }
 
   try {
-    console.log("Requested URL:", url); // 👈 Add this
-    const data = await instagramGetUrl(url);
-    console.log("Instagram data:", JSON.stringify(data, null, 2)); // 👈 Add this
+    console.log("Requested URL:", url);
+    // const data = await instagramGetUrl(url);
+    // console.log("Instagram data:", JSON.stringify(data, null, 2));
 
-    if (!data || !data.url_list || data.url_list.length === 0) {
-      return res.json({ links: [] });
-    }
+    // Temporary mocked response for testing
+    const dummyLinks = [
+      `https://example.com/fake-${type}-file1.mp4`,
+      `https://example.com/fake-${type}-file2.mp4`
+    ];
 
-    const links = data.media_details
-      .filter(m => {
-        if (type === 'video') return m.type === 'video';
-        if (type === 'photo') return m.type === 'image';
-        return true;
-      })
-      .map(m => m.url);
+    res.json({ links: dummyLinks });
 
-    res.json({ links });
   } catch (err) {
-    console.error("Extraction error:", err); // 👈 Add this
+    console.error("Extraction error:", err);
     res.status(500).json({ error: 'Failed to retrieve media links' });
   }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
