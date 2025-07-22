@@ -1,0 +1,1 @@
+/* JS placeholder – use your previously provided script.js here */
