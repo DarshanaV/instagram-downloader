@@ -50,8 +50,10 @@ app.post('/api/download', async (req, res) => {
     res.json({ links });
 
   } catch (err) {
-    console.error('RapidAPI error:', err.response?.data || err.message);
-    res.status(500).json({ error: 'Failed to retrieve media links' });
+    const status = err.response?.status;
+	const body = err.response?.data;
+	console.error('🔴 RapidAPI request failed: status=', status, 'body=', body);
+	res.status(500).json({ error: 'Failed to retrieve media links' });
   }
 });
 
