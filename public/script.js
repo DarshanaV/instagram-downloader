@@ -22,6 +22,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
   feedback.textContent = `Fetching ${selectedType}...`;
   result.innerHTML = '';
 
+  // Simulate AJAX call – replace with real endpoint later
   fetch('/api/download', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
