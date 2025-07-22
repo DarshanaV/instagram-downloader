@@ -23,13 +23,14 @@ app.post('/api/download', async (req, res) => {
 
   try {
     console.log('Fetching via RapidAPI:', url);
+	console.log('RAPIDAPI_KEY present:', !!process.env.RAPIDAPI_KEY);
 
     const response = await axios.get(
       'https://instagram-scrapper-api-posts-reels-stories-downloader.p.rapidapi.com/instagram/',
       {
         params: { url },
         headers: {
-          'X-RapidAPI-Key': '83c9369457mshc25a38c98ea7677p1f71fcjsndd05ce6761eb',		//process.env.RAPIDAPI_KEY, // set in Render dashboard
+          'X-RapidAPI-Key': process.env.RAPIDAPI_KEY, // set in Render dashboard
           'X-RapidAPI-Host': 'instagram-scrapper-api-posts-reels-stories-downloader.p.rapidapi.com'
         }
       }
