@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-// const { instagramGetUrl } = require('instagram-url-direct'); // Commented out for now
+// const { instagramGetUrl } = require('instagram-url-direct');
 
-const app = express();
+const app = express();  // Must be defined first
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
