@@ -39,6 +39,8 @@ app.post('/api/download', async (req, res) => {
       .map(item => item.url);
 
     console.log('Media links:', links);
+	console.log('📦 Full API response:', JSON.stringify(response.data, null, 2));
+
     return res.json({ links });
 
   } catch (err) {
