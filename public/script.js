@@ -1,56 +1,49 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('download-form');
-  const urlInput = document.getElementById('url');
-  const typeSelect = document.getElementById('type');
-  const feedback = document.getElementById('feedback');
-  const spinner = document.getElementById('spinner');
+let selectedType = 'video';
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const url = urlInput.value.trim();
-    const type = typeSelect.value;
-
-    if (!url) {
-      feedback.innerHTML = '❗ Please enter a valid Instagram URL.';
-      return;
-    }
-
-    feedback.innerHTML = '';
-    spinner.style.display = 'inline-block';
-
-    try {
-      const response = await fetch('/api/download', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ url, type })
-      });
-
-      const data = await response.json();
-      spinner.style.display = 'none';
-
-      if (!Array.isArray(data.links) || data.links.length === 0) {
-        feedback.innerHTML = '⚠️ No downloadable content found.';
-        return;
-      }
-
-      feedback.innerHTML = '🎉 Download links:';
-      data.links.forEach((link, index) => {
-        const a = document.createElement('a');
-        a.href = link;
-        a.innerText = `Download File ${index + 1}`;
-        a.target = '_blank';
-        a.className = 'download-btn';
-        feedback.appendChild(document.createElement('br'));
-        feedback.appendChild(a);
-      });
-
-    } catch (err) {
-      spinner.style.display = 'none';
-      feedback.innerHTML = '❌ Error retrieving download links.';
-      console.error(err);
-    }
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    selectedType = tab.getAttribute('data-type');
   });
+});
+
+document.getElementById('downloadBtn').addEventListener('click', () => {
+  const url = document.getElementById('urlInput').value.trim();
+  const feedback = document.getElementById('feedback');
+  const result = document.getElementById('result');
+
+  if (!url) {
+    alert('Please paste an Instagram link.');
+    return;
+  }
+
+  feedback.classList.remove('hidden');
+  feedback.textContent = `Fetching ${selectedType}...`;
+  result.innerHTML = '';
+
+  // Simulate AJAX call – replace with real endpoint later
+  fetch('/api/download', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url, type: selectedType })
+  })
+    .then(res => {
+      if (!res.ok) throw new Error('Failed to fetch download links.');
+      return res.json();
+    })
+    .then(data => {
+      feedback.classList.add('hidden');
+      if (data.links && data.links.length > 0) {
+        result.innerHTML = data.links.map(link =>
+          `<a href="${link}" target="_blank" download>Download ${selectedType}</a>`
+        ).join('');
+      } else {
+        result.innerHTML = '<p>No downloadable content found.</p>';
+      }
+    })
+    .catch(err => {
+      feedback.classList.remove('hidden');
+      feedback.textContent = 'Error: ' + err.message;
+    });
 });
