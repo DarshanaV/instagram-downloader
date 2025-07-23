@@ -10,54 +10,41 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
-
 app.post('/api/download', async (req, res) => {
   const { url, type } = req.body;
-
-  if (!url || !type) {
-    return res.status(400).json({ error: 'Missing URL or type' });
-  }
+  if (!url || !type) return res.status(400).json({ error: 'Missing URL or type' });
 
   try {
-    console.log('Fetching via RapidAPI:', url);
-	console.log('RAPIDAPI_KEY present:', !!process.env.RAPIDAPI_KEY);
+    console.log('Calling Instagram Scrapper API:', url);
 
     const response = await axios.get(
-      'https://instagram-scrapper-api-posts-reels-stories-downloader.p.rapidapi.com/instagram/',
+      'https://instagram-scrapper-api-posts-reels-stories-downloader.p.rapidapi.com/api/v1',
       {
         params: { url },
         headers: {
-          'X-RapidAPI-Key': process.env.RAPIDAPI_KEY, // set in Render dashboard
+          'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
           'X-RapidAPI-Host': 'instagram-scrapper-api-posts-reels-stories-downloader.p.rapidapi.com'
         }
       }
     );
 
-    const items = response.data || [];
-    console.log('Received items:', items.length);
+    const items = Array.isArray(response.data.media) ? response.data.media : [];
 
-    // Filter based on type
     const links = items
       .filter(item => {
         if (type === 'video') return item.type === 'video';
         if (type === 'photo') return item.type === 'image';
         return true;
       })
-      .map(item => item.link);
+      .map(item => item.url);
 
-    res.json({ links });
+    console.log('Media links:', links);
+    return res.json({ links });
 
   } catch (err) {
-    const status = err.response?.status;
-	const body = err.response?.data;
-	console.error('🔴 RapidAPI request failed: status=', status, 'body=', body);
-	res.status(500).json({ error: 'Failed to retrieve media links' });
+    console.error('🔥 API error:', err.response?.status, err.response?.data || err.message);
+    return res.status(500).json({ error: 'Failed to retrieve media links' });
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server listening on http://localhost:${PORT}`));
