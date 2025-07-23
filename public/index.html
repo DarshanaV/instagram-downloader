@@ -1,41 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Free Instagram Downloader</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram Downloader</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="header">
-    <div class="container">
-      <h1>Instagram Downloader</h1>
-      <nav>
-        <ul class="nav-tabs" id="tabList">
-          <li class="tab active" data-type="video">Video</li>
-          <li class="tab" data-type="photo">Photo</li>
-          <li class="tab" data-type="reel">Reels</li>
-          <li class="tab" data-type="story">Story</li>
-          <li class="tab" data-type="igtv">IGTV</li>
-          <li class="tab" data-type="carousel">Carousel</li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <div class="container">
+    <h1>Instagram Downloader</h1>
 
-  <section class="hero">
-    <div class="container">
-      <h2>Download Instagram Videos, Photos, Reels & More</h2>
-      <div class="input-group">
-        <input type="url" placeholder="Paste Instagram link" id="urlInput" />
-        <button id="downloadBtn">Download</button>
-      </div>
-      <div id="feedback" class="feedback hidden">Processing...</div>
-      <div id="result" class="result"></div>
-    </div>
-  </section>
-
-  <section class="features container">
+    <form id="download-form">
+      <input type="url" id="url" placeholder="Paste Instagram URL here" required />
+      <select id="type">
+        <option value="video">Video</option>
+        <option value="photo">Photo</option>
+      </select>
+      <button type="submit">Download</button>
+      <span id="spinner" style="display:none;">⏳</span>
     <div class="feature">
       <h3>Fast download</h3>
       <p>Our servers provide you with lightning download speeds.</p>
