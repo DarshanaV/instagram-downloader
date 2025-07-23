@@ -18,7 +18,7 @@ app.post('/api/download', async (req, res) => {
     console.log('Calling Instagram Scrapper API:', url);
 
     const response = await axios.get(
-      'https://instagram-scrapper-api-posts-reels-stories-downloader.p.rapidapi.com/api/v1',
+      'https://instagram-scrapper-api-posts-reels-stories-downloader.p.rapidapi.com/instagram/',
       {
         params: { url },
         headers: {
