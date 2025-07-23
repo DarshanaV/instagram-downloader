@@ -1,29 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instagram Downloader</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Free Instagram Downloader</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Instagram Downloader</h1>
+  <header class="header">
+    <div class="container">
+      <h1>Instagram Downloader</h1>
+      <nav>
+        <ul class="nav-tabs" id="tabList">
+          <li class="tab active" data-type="video">Video</li>
+          <li class="tab" data-type="photo">Photo</li>
+          <li class="tab" data-type="reel">Reels</li>
+          <li class="tab" data-type="story">Story</li>
+          <li class="tab" data-type="igtv">IGTV</li>
+          <li class="tab" data-type="carousel">Carousel</li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <form id="download-form">
-      <input type="url" id="url" placeholder="Paste Instagram URL here" required />
-      <select id="type">
-        <option value="video">Video</option>
-        <option value="photo">Photo</option>
-      </select>
-      <button type="submit">Download</button>
-      <span id="spinner" style="display:none;">⏳</span>
-    </form>
+  <section class="hero">
+    <div class="container">
+      <h2>Download Instagram Videos, Photos, Reels & More</h2>
+      <div class="input-group">
+        <input type="url" placeholder="Paste Instagram link" id="urlInput" />
+        <button id="downloadBtn">Download</button>
+      </div>
+      <div id="feedback" class="feedback hidden">Processing...</div>
+      <div id="result" class="result"></div>
+    </div>
+  </section>
 
-    <div id="feedback" class="feedback"></div>
-  </div>
+  <section class="features container">
+    <div class="feature">
+      <h3>Fast download</h3>
+      <p>Our servers provide you with lightning download speeds.</p>
+    </div>
+    <div class="feature">
+      <h3>All formats supported</h3>
+      <p>Videos, Reels, Stories, IGTV, Photos & Carousels.</p>
+    </div>
+    <div class="feature">
+      <h3>No login required</h3>
+      <p>Your links are processed securely and removed after download.</p>
+    </div>
+  </section>
 
-  <!-- ✅ Place script here so DOM is ready when it runs -->
+  <section class="faq container">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>Is it legal?</summary>
+      <p>Downloading public posts for personal use is usually allowed; respect copyright.</p>
+    </details>
+    <details>
+      <summary>Any download limits?</summary>
+      <p>No. Download as many as you want—no limits.</p>
+    </details>
+    <details>
+      <summary>Supported devices?</summary>
+      <p>Works on desktop and mobile with modern browsers.</p>
+    </details>
+  </section>
+
+  <footer class="footer container">
+    <p>© 2025 Mywork.app – All rights reserved.</p>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
