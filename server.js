@@ -32,7 +32,7 @@ app.post('/api/download', async (req, res) => {
 
     const links = items
       .filter(item => {
-        if (type === 'video') return item.type === 'video';
+        if (type === 'mp4') return item.type === 'video';
         if (type === 'photo') return item.type === 'image';
         return true;
       })
