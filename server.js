@@ -36,7 +36,7 @@ app.post('/api/download', async (req, res) => {
 		if (type === 'photo') return item.type === 'jpg';
 		return true;
 	  })
-	  .map(item => item.url);
+	  .map(item => item.url); 
 
 
     console.log('Media links:', links);
