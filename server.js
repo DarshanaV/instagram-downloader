@@ -28,15 +28,16 @@ app.post('/api/download', async (req, res) => {
       }
     );
 
-    const items = Array.isArray(response.data.media) ? response.data.media : [];
+    const items = Array.isArray(response.data.links) ? response.data.links : [];
 
-    const links = items
-      .filter(item => {
-        if (type === 'video') return item.type === 'video';
-        if (type === 'photo') return item.type === 'image';
-        return true;
-      })
-      .map(item => item.url);
+	const links = items
+	  .filter(item => {
+		if (type === 'video') return item.type === 'mp4';
+		if (type === 'photo') return item.type === 'image';
+		return true;
+	  })
+	  .map(item => item.url);
+
 
     console.log('Media links:', links);
 	console.log('📦 Full API response:', JSON.stringify(response.data, null, 2));
